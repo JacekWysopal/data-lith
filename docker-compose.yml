@@ -1,0 +1,48 @@
+name: data-lith
+
+services:
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin123}
+    ports:
+      - "${MINIO_API_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    volumes:
+      - minio-data:/data
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin123}
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set local http://minio:9000 $$MINIO_ROOT_USER $$MINIO_ROOT_PASSWORD; do
+        echo 'Waiting for MinIO...';
+        sleep 2;
+      done;
+      mc mb --ignore-existing local/lakehouse;
+      printf '' | mc pipe local/lakehouse/raw/.keep;
+      printf '' | mc pipe local/lakehouse/clean/.keep;
+      printf '' | mc pipe local/lakehouse/curated/.keep;
+      mc anonymous set none local/lakehouse;
+      "
+    restart: "no"
+
+  duckdb-smoke:
+    image: python:3.12-slim
+    profiles: ["tools"]
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    command: >
+      sh -c "pip install --no-cache-dir duckdb==1.1.3 &&
+      python infrastructure/docker/duckdb_smoke.py"
+
+volumes:
+  minio-data:
