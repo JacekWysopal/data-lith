@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: event_counts_by_day
+    description: Daily event counts prepared for BI and dashboard use.
+    columns:
+      - name: event_date
+        tests:
+          - not_null
+      - name: event_name
+        tests:
+          - not_null
+      - name: event_count
+        tests:
+          - not_null
+

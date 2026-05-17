@@ -1,4 +1,4 @@
-# Week 1 Foundation
+# Local Foundation
 
 ## Goal
 

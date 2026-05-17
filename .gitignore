@@ -5,4 +5,8 @@ __pycache__/
 .venv/
 *.duckdb
 *.duckdb.wal
-
+pipelines/dbt/.user.yml
+pipelines/dbt/logs/
+pipelines/dbt/target/
+.dagster/
+pipelines/dagster/__pycache__/

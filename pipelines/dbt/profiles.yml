@@ -1,0 +1,9 @@
+data_lith:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: /workspace/storage/analytics.duckdb
+      schema: main
+      threads: 4
+

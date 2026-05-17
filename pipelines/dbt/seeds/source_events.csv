@@ -1,0 +1,5 @@
+event_id,source,event_name,user_id,occurred_at,payload
+evt_001,demo,signup,123,2026-05-17 18:51:06,"{""plan"":""free""}"
+evt_002,demo,page_view,123,2026-05-17 18:52:10,"{""path"":""/home""}"
+evt_003,demo,signup,456,2026-05-17 19:03:44,"{""plan"":""pro""}"
+

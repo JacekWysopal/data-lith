@@ -1,0 +1,36 @@
+name: data_lith
+version: "0.1.0"
+config-version: 2
+
+profile: data_lith
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+clean-targets:
+  - target
+  - dbt_packages
+
+models:
+  data_lith:
+    clean:
+      +schema: clean
+      +materialized: table
+    curated:
+      +schema: curated
+      +materialized: table
+
+seeds:
+  data_lith:
+    +schema: raw
+    source_events:
+      +column_types:
+        event_id: varchar
+        source: varchar
+        event_name: varchar
+        user_id: integer
+        occurred_at: timestamp
+        payload: varchar
+

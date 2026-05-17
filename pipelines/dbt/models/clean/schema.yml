@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: events
+    description: Cleaned event stream with normalized source and event names.
+    columns:
+      - name: event_id
+        tests:
+          - not_null
+          - unique
+      - name: source
+        tests:
+          - not_null
+      - name: event_name
+        tests:
+          - not_null
+      - name: occurred_at
+        tests:
+          - not_null
+

@@ -1,4 +1,4 @@
-# Week 1 Infrastructure
+# Local Infrastructure
 
 This folder contains the local foundation for the analytics platform:
 
